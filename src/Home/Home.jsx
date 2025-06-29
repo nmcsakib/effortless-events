@@ -2,6 +2,7 @@ import React from 'react';
 import { IoChevronForward } from "react-icons/io5";
 import StarfieldWarp from "./StarfieldWarp"
 import Navbar from '../components/Navbar/Navbar';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     return (
@@ -24,17 +25,17 @@ const Home = () => {
 
                 <div
                     className="flex items-center flex-col md:flex-row gap-3 justify-center 425px:gap-6 mt-10 md:mt-12">
-                    <button
-                        className="bg-[#EBD6FB] pl-5 pr-4 border border-[#EBD6FB] rounded-lg py-3 flex items-center gap-2 text-[1rem] group text-black"
+                    <Link to="/Events"
+                        className="cursor-pointer bg-[#EBD6FB] pl-5 pr-4 border border-[#EBD6FB] rounded-lg py-3 flex items-center gap-2 text-[1rem] group text-black"
                     >
                         All Events
                         <IoChevronForward className="group-hover:ml-1 transition-all duration-200" />
-                    </button>
-                    <button
-                        className="border-2 border-[#EBD6FB] pl-5 pr-4 rounded-lg py-3 flex items-center gap-2 text-[1rem] group">
+                    </Link>
+                    <Link to="/Add-Events"
+                        className="cursor-pointer border-2 border-[#EBD6FB] pl-5 pr-4 rounded-lg py-3 flex items-center gap-2 text-[1rem] group">
                         Add Events
                         <IoChevronForward className="group-hover:ml-1 transition-all duration-200" />
-                    </button>
+                    </Link>
                 </div>
             </div>
         </StarfieldWarp>

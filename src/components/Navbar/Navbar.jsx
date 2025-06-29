@@ -13,8 +13,8 @@ const Navbar = () => {
     const user = false;
     const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
        const [accountMenuOpen, setAccountMenuOpen] = useState(false)
-     const NavMenu = ({title}) =>  <Link to={`/${title}`} className="before:w-0 hover:before:w-full before:bg-[#687FE5]  before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#687FE5] transition-all duration-300 before:left-0 cursor-pointer capitalize">{title}</Link>;
-    const SmallNavMenu = ({title}) =>  <a to={`/${title}`} className="before:w-0 hover:before:w-full before:bg-[#687FE5]  before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#687FE5] transition-all duration-300 before:left-0 cursor-pointer capitalize">{title}</a>;
+     const NavMenu = ({title, link}) =>  <Link to={`/${link}`} className="before:w-0 hover:before:w-full before:bg-[#687FE5]  before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#687FE5] transition-all duration-300 before:left-0 cursor-pointer capitalize">{title}</Link>;
+    const SmallNavMenu = ({title, link}) =>  <Link to={`/${link}`} className="before:w-0 hover:before:w-full before:bg-[#687FE5]  before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#687FE5] transition-all duration-300 before:left-0 cursor-pointer capitalize">{title}</Link>;
 
     return (
         <nav
@@ -28,10 +28,10 @@ const Navbar = () => {
 
                 
 
-                 <NavMenu title="Home"/>
-                <NavMenu title="Events"/>
-                <NavMenu title="Add events"/>
-                <NavMenu title="My events"/>
+                 <NavMenu title="Home" link=""/>
+                <NavMenu title="Events" link="Events"/>
+                <NavMenu title="Add Events" link="Add-Events"/>
+                <NavMenu title="My Events" link="My-Events"/>
             </ul>
 
             {/* action buttons */}
@@ -85,10 +85,10 @@ const Navbar = () => {
                              className="text-[1.8rem]  text-[#424242]c cursor-pointer md:hidden flex"/>
             </div> :   <>
                                 
-                <button
+                <Link to={'/authentication'}
                     className="py-[7px] text-[1rem] px-[16px] rounded-full capitalize bg-[#687FE5] text-white hover:bg-blue-400 transition-all duration-300 sm:flex hidden">Sign
                     up
-                </button>
+                </Link>
             </>
            
            }
