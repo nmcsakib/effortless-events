@@ -3,9 +3,10 @@ import React, {useEffect, useState} from 'react';
 
 // react icons
 import {IoMdFootball} from 'react-icons/io';
-import {MdOutlineSportsCricket, MdOutlineSportsTennis} from 'react-icons/md';
+import {MdCalendarMonth, MdOutlineSportsCricket, MdOutlineSportsTennis} from 'react-icons/md';
 import {GiTennisRacket} from 'react-icons/gi';
 import {IoChevronDown} from 'react-icons/io5';
+import { CiCalendarDate } from 'react-icons/ci';
 
 const SelectBox = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -13,20 +14,20 @@ const SelectBox = () => {
 
     const options = [
         {
-            icon: <IoMdFootball />,
-            title: 'Football',
+            icon: <CiCalendarDate />,
+            title: ' Current week',
         },
         {
-            icon: <MdOutlineSportsCricket />,
-            title: 'Cricket',
+            icon: <CiCalendarDate />,
+            title: 'Last week',
         },
         {
-            icon: <MdOutlineSportsTennis />,
-            title: 'Tennis',
+            icon: <MdCalendarMonth/>,
+            title: 'Current month',
         },
         {
-            icon: <GiTennisRacket />,
-            title: 'Badminton',
+            icon: <MdCalendarMonth />,
+            title: 'Last month',
         },
     ];
 
