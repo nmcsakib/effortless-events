@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
-
+  import { ToastContainer } from 'react-toastify';
 const App = () => {
   const location = useLocation()
   return (
@@ -9,6 +9,7 @@ const App = () => {
         location.pathname !== '/' && <Navbar/> 
       }
       <Outlet />
+      <ToastContainer/>
     </div>
   );
 };

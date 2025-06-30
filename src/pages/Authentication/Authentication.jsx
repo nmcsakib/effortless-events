@@ -1,10 +1,16 @@
+import { useContext } from "react";
 import { useState } from "react";
-import { GrGoogle } from "react-icons/gr";
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 // import { useContext, useState } from "react";
 
 
 const Authentication = () => {
+  const navigate = useNavigate();
   const [login, setLogin] = useState(true);
+  const [error, setError] = useState("");
+  const { setUser } = useContext(AuthContext);
 
 const handleLogin = (e) => {
   e.preventDefault();
@@ -13,8 +19,79 @@ const handleLogin = (e) => {
   const formData = new FormData(form);
   const email = formData.get("email")
   const password = formData.get("password")
-  const username = formData.get("username")
-  const fullName = formData.get("fullname")
+
+  fetch(`${import.meta.env.VITE_SERVER}/login`, {
+    method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+  }).then(res => res.json()).then(data => {
+      if(data.error){
+      setError(data.error)
+      console.log(error);
+    }
+     if (data._id) {
+      localStorage.setItem("user", JSON.stringify(data));
+      setUser(JSON.stringify(data))
+      toast("Logged in Successfully !")
+      navigate('/')
+    }
+    console.log(data)}).catch(err => {
+      console.log(err);
+      toast("Something went wrong!")
+    })
+
+
+  console.log(email, password);
+}
+
+
+
+
+const handleRegister = (e) => {
+  e.preventDefault();
+
+  const form = e.target;
+  const formData = new FormData(form);
+  const email = formData.get("email")
+  const password = formData.get("password")
+  const name = formData.get("name")
+  const photoURL = formData.get("photoURL")
+  const user = {
+    name, email, password, photoURL
+  }
+  console.log(user);
+  fetch(`${import.meta.env.VITE_SERVER}/all-users`, {
+    method: "POST",
+     headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(user)
+  }).then(res => res.json()).then(data => {
+    setError('')
+    // console.log(data);
+    if(data.error){
+      setError(data.error)
+      console.log(error);
+    }
+       if (data.acknowledged) {
+      localStorage.setItem("user", JSON.stringify({
+        name: name,
+        email: email,
+        photoURL: photoURL
+      }));
+      setUser(JSON.stringify({
+        name: name,
+        email: email,
+        photoURL: photoURL
+      }))
+      toast("Logged in Successfully !")
+      navigate('/')
+
+
+      console.log("User info stored in session storage.");
+    } 
+    }).catch(err => {
+      console.log(err);
+      toast("Something went wrong!")
+    })
 }
 //  if(user){ 
 //         return <Navigate to={'/'}/>
@@ -57,18 +134,18 @@ const handleLogin = (e) => {
         className="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 mb-1 leading-tight focus:outline-none focus:shadow-outline"
         type="password"
         name="password"
-        placeholder="Enter your password"
+        placeholder="password"
       />
     </div>
 
 
       <button
-        className="bg-[#687FE5] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+        className="cursor-pointer bg-[#687FE5] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
         type="submit"
       >
         Log In
       </button>
-      <p className="text-red-500 pt-2 text-center"></p>
+      <p className="text-red-500 pt-2 text-center">{error}</p>
       
       
   </form> 
@@ -81,8 +158,18 @@ const handleLogin = (e) => {
  <p className=" text-2xl font-bold text-center mb-4 text-gray-400">
       Sign up
     </p>
-  <form className="mb-4 text-sm">
+  <form onSubmit={handleRegister} className="mb-4 text-sm">
    
+    <div className="mb-4">
+      
+      <input required
+        className="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+        
+        type="text"
+        placeholder="Name"
+        name="name"
+        />
+    </div>
     <div className="mb-4">
       
       <input required
@@ -103,35 +190,25 @@ const handleLogin = (e) => {
         name="password"
         />
     </div>
-    <div className="mb-4">
-      
-      <input required
-        className="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-        
-        type="text"
-        placeholder="Full name"
-        name="fullname"
-        />
-    </div>
 
     <div className="mb-6">
       
       <input required
         className="shadow appearance-none border border-gray-400 rounded w-full py-2 px-3 mb-1 leading-tight focus:outline-none focus:shadow-outline"
         type="text"
-        name="username"
-        placeholder="User name"
+        name="photoURL"
+        placeholder="Photo URL"
       />
     </div>
 
 
       <button 
-        className="bg-[#687FE5] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+        className="cursor-pointer bg-[#687FE5] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
         type="submit"
         >
         Sign Up
       </button>
-      <p className="text-red-500 pt-2 text-center"></p>
+      <p className="text-red-500 pt-2 text-center">{error}</p>
       
       
   </form> 
