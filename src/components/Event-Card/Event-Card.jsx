@@ -3,8 +3,9 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import Modal from "../Modal/Modal";
 
-const EventCard = ({ event }) => {
+const EventCard = ({ event, handleDelete }) => {
   const {
     _id,
     title,
@@ -23,7 +24,7 @@ const EventCard = ({ event }) => {
   const {pathname} = useLocation();
   const [count, setCount] = useState(attendeeCount || 0);
   const [joined, setJoined] = useState(false);
-
+// console.log(date);
  const handleJoin = async () => {
     try {
       const res = await fetch(`${import.meta.env.VITE_SERVER}/join-event/${_id}`, {
@@ -34,19 +35,15 @@ const EventCard = ({ event }) => {
       if (data.success) {
         setCount(prev => prev + 1); 
         setJoined(true)
-        toast('Thank you for Joining')
+        toast.success('Thank you for Joining')
       } else {
-        toast("Failed to join event");
+        toast.error("Failed to join event");
       }
     } catch (err) {
       console.error("Error joining event:", err);
     }
   };
 
-
-
-
-  // Only used for spotlight glow
   const handleMouseMove = (e) => {
     if (cardRef.current) {
       const rect = cardRef.current.getBoundingClientRect();
@@ -70,37 +67,35 @@ const EventCard = ({ event }) => {
     >
       <motion.div
         className="relative w-full h-full overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 rounded-lg p-5"
-        // ❌ Rotation removed
+        
         transition={{ type: "spring", stiffness: 300, damping: 15 }}
       >
         <div className="flex flex-col gap-2 text-white z-10">
-         <h3 className="text-xl font-bold text-purple-400">🌟 {title}</h3>
+         <h3 className="text-xl font-bold text-purple-400">{title}</h3>
           <p className="text-sm text-gray-300">Posted by: <span className="font-medium text-white">{name}</span></p>
-          <p className="text-sm">🕒 {date} • {time}</p> 
-          <p className="text-sm">📍 {location}</p>
+          <p className="text-sm"> {date} • {time}</p> 
+          <p className="text-sm"> {location}</p>
           <p className="text-sm text-gray-300">{description}</p>
           <p className="text-sm">👥 {count} Attendees</p>
 
           {pathname === '/My-Events' ? (
             <>
               <Link
-                to="/My-Events/update"
+                to={`/My-Events/update/${_id}`}
                 className="text-center cursor-pointer mt-3 px-4 py-2 rounded-md bg-purple-600 hover:bg-purple-700 transition text-sm font-semibold"
               >
                 Update
               </Link>
-              <button className="cursor-pointer mt-3 px-4 py-2 rounded-md bg-red-400 hover:bg-red-500 transition text-sm font-semibold">
-                Delete
-              </button>
+             
+              <Modal id={_id} handleDelete={handleDelete} />
             </>
           ) : (
             <button onClick={handleJoin} disabled={joined} className="disabled:cursor-not-allowed disabled:bg-purple-300 cursor-pointer mt-3 px-4 py-2 rounded-md bg-purple-600 hover:bg-purple-700 transition text-sm font-semibold">
-              {joined ? "Joined" : "Join Event"}
+              {joined ? "Joining Request Sent" : "Join Event"}
             </button>
           )}
         </div>
 
-        {/* ✅ Spotlight Glow (Kept) */}
         {isHovered && (
           <motion.div
             className="absolute inset-0 pointer-events-none"

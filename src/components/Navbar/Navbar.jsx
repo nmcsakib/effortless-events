@@ -83,32 +83,19 @@ const Navbar = () => {
            
            }
            
-
-          
-
-
-                <CiMenuFries
-                    className="text-[1.8rem]  mr-1 text-[#424242]c cursor-pointer md:hidden flex"
-                    onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}/>
             </div>
 
             {/* mobile sidebar */}
             <aside
-                className={` ${mobileSidebarOpen ? "translate-x-0 opacity-100 z-20" : "translate-x-[200px] opacity-0 z-[-1]"} md:hidden bg-white p-4 text-center absolute top-[65px] dark:bg-slate-700 right-0 w-full sm:w-[50%] rounded-md transition-all duration-300`}>
-                <div className="relative mb-5">
-                    <input
-                        className="py-1.5 pr-4 dark:bg-slate-800  dark:border-slate-900/50 w-full pl-10 rounded-full border border-gray-200 outline-none focus:border-[#3B9DF8]"
-                        placeholder="Search..."/>
-                    <IoIosSearch className="absolute dark:text-slate-400 top-[8px] left-3 text-gray-500 text-[1.3rem]"/>
-                </div>
+                className={` ${mobileSidebarOpen ? "translate-x-0 opacity-100 z-20" : "translate-x-[200px] opacity-0 z-[-1]"} md:hidden p-4 text-center absolute top-[65px] bg-slate-400 right-0 w-full sm:w-[50%] rounded-md transition-all duration-300`}>
+               
                 <ul className="items-center gap-[20px] text-[1rem] text-gray-600 flex flex-col">
 
-                <SmallNavMenu title="Home"/>
-                <SmallNavMenu title="Events"/>
-                <SmallNavMenu title="Add events"/>
-                <SmallNavMenu title="My events"/>
-
-                </ul>
+                <SmallNavMenu title="Home" link=""/>
+                <SmallNavMenu title="Events" link="Events"/>
+                <SmallNavMenu title="Add Events" link="Add-Events"/>
+                <SmallNavMenu title="My Events" link="My-Events"/>
+            </ul>
             </aside>
         </nav>
     );

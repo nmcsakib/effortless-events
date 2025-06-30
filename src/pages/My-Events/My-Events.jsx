@@ -5,12 +5,13 @@ import SectionTitle from "../../components/Section-Title/Section-Title";
 import { motion } from "framer-motion";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const MyEvents = () => {
   const { user } = useContext(AuthContext); 
   const [myEvents, setMyEvents] = useState([]);
+  const[deleted, setDeleted] = useState(0)
   const navigate = useNavigate();
-
   useEffect(() => {
     if (!user) {
       navigate("/authentication");
@@ -30,7 +31,28 @@ const MyEvents = () => {
     };
 
     fetchMyEvents();
-  }, [user, navigate]); 
+  }, [user, navigate, deleted]); 
+
+  
+  const handleDelete = async (id) => {
+
+  try {
+    const res = await fetch(`${import.meta.env.VITE_SERVER}/event/${id}`, {
+      method: "DELETE",
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      setDeleted(prev => prev + 1)
+      toast.success("Event deleted successfully");
+    } else {
+      toast.error("Failed to delete event");
+    }
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    toast.error("Something went wrong");
+  }
+};
 
   return (
     <motion.div
@@ -45,7 +67,8 @@ const MyEvents = () => {
       <div className="pt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 justify-center ">
         {myEvents.length > 0 ? (
           myEvents.map((event) => (
-            <EventCard key={event._id} event={event} />
+              <EventCard event={event} key={event._id} handleDelete={handleDelete}/>
+            
           ))
         ) : (
           <p className="text-white text-center col-span-3">No events found.</p>

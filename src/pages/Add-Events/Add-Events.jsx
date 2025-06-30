@@ -17,13 +17,13 @@ const AddEvent = () => {
   }
 
   const [formData, setFormData] = useState({
-    title: "",
-    name: "",
-    date: "",
-    time: "",
-    location: "",
-    description: "",
-    attendeeCount: 0,
+  title: "",
+  name: "",
+  date: "",
+  time: "",
+  location: "",
+  description: "",
+  attendeeCount: 0,
   });
 
   const handleChange = (e) => {
@@ -56,14 +56,14 @@ const AddEvent = () => {
       const result = await res.json();
 
       if (res.ok) {
-        toast("✅ Event added successfully!");
+        toast.success("Event added successfully!");
         navigate("/Events"); 
       } else {
         toast(result.error || "❌ Failed to add event");
       }
     } catch (error) {
       console.error("Error adding event:", error);
-      toast("❌ Error sending request");
+      toast.error("❌ Error sending request");
     }
   };
 

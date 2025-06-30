@@ -1,37 +1,54 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
-// import { useForm } from "react-hook-form";
-// import Swal from "sweetalert2";
-// import useAxiosNormal from "../../../Hooks/useAxiosNormal";
 import { motion } from "framer-motion";
 import SectionTitle from "../Section-Title/Section-Title";
 import DateBox from "../Date-Box/Date-Box";
+import { useLoaderData, useNavigate, useNavigation, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 const UpdateEvent = () => {
-//   const { register, handleSubmit, reset } = useForm();
+  const params = useParams();
+  const navigate = useNavigate();
+  const [event, setEvent] = useState([])
+  const [selectedDate, setSelectedDate] = useState("");
+  useEffect( () => {
+    fetch(`${import.meta.env.VITE_SERVER}/event/${params.id}`).then(res => res.json()).then(data => {
+     setEvent(data)
+     setSelectedDate(data.date)
+    })
+  },[params.id])
 
-  const handleSubmit = (data) => {
-    const eventData = {
-      title: data.title,
-      name: data.name,
-      dateTime: data.dateTime,
-      location: data.location,
-      description: data.description,
-      attendeeCount: 0,
-    };
-    console.log(eventData);
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    // axiosNormal.post("/event", eventData).then((res) => {
-    //   if (res.data.message === "success") {
-    //     Swal.fire({
-    //       title: "Event Added Successfully!",
-    //       icon: "success",
-    //       confirmButtonText: "OK",
-    //     });
-    //     reset();
-    //   }
-    // });
+  const form = e.target;
+  const updatedEvent = {
+    title: form.title.value,
+    name: form.name.value,
+    date: selectedDate,
+    time: form.time.value,
+    location: form.location.value,
+    description: form.description.value,
+    attendeeCount: form.attendeeCount.value,
   };
+
+  try {
+    const res = await fetch(`${import.meta.env.VITE_SERVER}/event/${params.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedEvent),
+    });
+
+    const result = await res.json();
+    toast.success("Event Updated successfully")
+    navigate('/My-Events')
+  } catch (err) {
+    console.error("Failed to update event:", err);
+  }
+};
+
 
   return (
     <motion.div
@@ -46,8 +63,10 @@ const UpdateEvent = () => {
         <div>
           <label className="block text-white font-semibold mb-2">Event Title</label>
           <input
+          defaultValue={event.title}
+          name="title"
             type="text"
-            // {...register("title", { required: true })}
+            
             placeholder="Enter Event Title"
             className="w-full p-3 rounded  text-white border border-gray-300 outline-none"
           />
@@ -56,21 +75,25 @@ const UpdateEvent = () => {
         <div>
           <label className="block text-white font-semibold mb-2">Your Name</label>
           <input
+          defaultValue={event.name}
             type="text"
-            // {...register("name", { required: true })}
+            name="name"
+            
             placeholder="Enter Your Name"
             className="w-full p-3 rounded  text-white border border-gray-300 outline-none"
           />
         </div>
 
   <label className="block text-white font-semibold mb-2">Date</label>
-        <DateBox/>
+        <DateBox selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
 
         <div>
           <label className="block text-white font-semibold mb-2">Time</label>
           <input
+          defaultValue={event.time}
+          name="time"
             type="time"
-            // {...register("location", { required: true })}
+            
             placeholder="Enter Time"
             className="w-full p-3 rounded  text-white border border-gray-300 outline-none"
           />
@@ -79,8 +102,10 @@ const UpdateEvent = () => {
           <label className="block text-white font-semibold mb-2">Location</label>
           <input
             type="text"
+            name="location"
+            defaultValue={event.location}
             
-            // {...register("location", { required: true })}
+            
             placeholder="Enter Location"
             className="w-full p-3 rounded  text-white border border-gray-300 outline-none"
           />
@@ -89,8 +114,9 @@ const UpdateEvent = () => {
           <label className="block text-white font-semibold mb-2">Attendee</label>
           <input
             type="number"
-            defaultValue={0}
-            // {...register("location", { required: true })}
+            name="attendeeCount"
+            defaultValue={event.attendeeCount}
+            
             placeholder="Enter Attendee numbers"
             className="w-full p-3 rounded  text-white border border-gray-300 outline-none"
           />
@@ -99,7 +125,9 @@ const UpdateEvent = () => {
         <div>
           <label className="block text-white font-semibold mb-2">Description</label>
           <textarea
-            // {...register("description", { required: true })}
+          defaultValue={event.description}
+          name="description"
+            
             rows={4}
             placeholder="Enter Event Description"
             className="w-full p-3 rounded  text-white border border-gray-300 outline-none"
@@ -110,7 +138,7 @@ const UpdateEvent = () => {
           type="submit"
           className="cursor-pointer w-full py-3 bg-[#687FE5] text-black font-bold rounded hover:bg-[#5a55a0] transition"
         >
-          Add Event
+          Update Event
         </button>
       </form>
     </motion.div>

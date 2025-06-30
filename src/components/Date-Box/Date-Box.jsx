@@ -1,12 +1,5 @@
 import "cally";
-const DateBox = () => {
-  const getToday = () => {
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-  const dd = String(today.getDate()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
-};
+const DateBox = ({setSelectedDate, selectedDate}) => {
 return (
 <div id="date-range-picker" date-rangepicker class="flex items-center">
   <div class="relative w-full">
@@ -17,7 +10,7 @@ return (
         </svg>
          </label>
     </div>
-    <input defaultValue={getToday()} id="date" name="date" type="date" class=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 
+    <input defaultValue={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} id="date" name="date" type="date" class=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 
     py-2.5 px-2.5   dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
   </div>
 </div>

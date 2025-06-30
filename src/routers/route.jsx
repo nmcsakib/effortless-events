@@ -20,30 +20,30 @@ export const router = createBrowserRouter([
       {
         path: '/Events',
         element: <PrivateRoute>
-          <AllEvents/>
+          <AllEvents />
         </PrivateRoute>
       },
       {
         path: '/Add-Events',
         element: <PrivateRoute>
-          <AddEvent/>
+          <AddEvent />
         </PrivateRoute>
       },
       {
         path: '/My-Events',
         element: <PrivateRoute>
-          <MyEvents/>
+          <MyEvents />
         </PrivateRoute>,
-       
+
       },
       {
-            path: '/My-Events/update',
-            element: <UpdateEvent/>
-          },
+        path: '/My-Events/update/:id',
+        element: <UpdateEvent />,
+      },
       {
-            path: '/authentication',
-            element: <Authentication/>
-          }
+        path: '/authentication',
+        element: <Authentication />
+      }
     ]
   }
 ]);

@@ -6,7 +6,7 @@ const StarfieldWarp = ({ children }) => {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const starsRef = useRef([]);
   const animationRef = useRef(null);
-  const warpSpeed = 0.5; // slow constant speed
+  const warpSpeed = 0.5;
 
   useEffect(() => {
     const canvas = canvasRef.current;

@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { IoChevronForward } from "react-icons/io5";
 import StarfieldWarp from "./StarfieldWarp"
 import Navbar from '../components/Navbar/Navbar';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const Home = () => {
+    const location = useLocation()
+    const {setUser} =useContext(AuthContext)
+    useEffect(()=> {
+      const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+    },[location])
+
     return (
         <StarfieldWarp>
 
@@ -15,7 +25,7 @@ const Home = () => {
 
                 <h1
                     className="text-[2rem] lg:text-[3rem] text-center font-bold lg:leading-relaxed pt-20">
-                    Crafting Unforgettable Moments <br /> with Zero Stress
+                    Arrange Unforgettable Events <br /> with Zero Stress
                 </h1>
 
                 <p

@@ -8,14 +8,13 @@ import {GiTennisRacket} from 'react-icons/gi';
 import {IoChevronDown} from 'react-icons/io5';
 import { CiCalendarDate } from 'react-icons/ci';
 
-const SelectBox = () => {
+const SelectBox = ({selectedItem, setSelectedItem}) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [selectedItem, setSelectedItem] = useState('Select Option');
 
     const options = [
         {
             icon: <CiCalendarDate />,
-            title: ' Current week',
+            title: 'Current week',
         },
         {
             icon: <CiCalendarDate />,
@@ -31,7 +30,6 @@ const SelectBox = () => {
         },
     ];
 
-    // outside click to off the dropdown
     useEffect(() => {
         const handleClickOutside = (event) => {
             let target = event.target;

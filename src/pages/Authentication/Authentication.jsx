@@ -1,16 +1,19 @@
 import { useContext } from "react";
 import { useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-// import { useContext, useState } from "react";
 
 
 const Authentication = () => {
   const navigate = useNavigate();
   const [login, setLogin] = useState(true);
   const [error, setError] = useState("");
-  const { setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
+
+   if(user){ 
+        return <Navigate to={'/'}/>
+   }
 
 const handleLogin = (e) => {
   e.preventDefault();
@@ -32,16 +35,12 @@ const handleLogin = (e) => {
      if (data._id) {
       localStorage.setItem("user", JSON.stringify(data));
       setUser(JSON.stringify(data))
-      toast("Logged in Successfully !")
+      toast.success("Logged in Successfully !")
       navigate('/')
-    }
-    console.log(data)}).catch(err => {
+    }}).catch(err => {
       console.log(err);
-      toast("Something went wrong!")
+      toast.error("Something went wrong!")
     })
-
-
-  console.log(email, password);
 }
 
 
@@ -59,7 +58,6 @@ const handleRegister = (e) => {
   const user = {
     name, email, password, photoURL
   }
-  console.log(user);
   fetch(`${import.meta.env.VITE_SERVER}/all-users`, {
     method: "POST",
      headers: { 'content-type': 'application/json' },
@@ -82,20 +80,18 @@ const handleRegister = (e) => {
         email: email,
         photoURL: photoURL
       }))
-      toast("Logged in Successfully !")
+      toast.success("Logged in Successfully !")
       navigate('/')
 
 
-      console.log("User info stored in session storage.");
+      console.log("User info stored in local-storage.");
     } 
     }).catch(err => {
       console.log(err);
-      toast("Something went wrong!")
+      toast.error("Something went wrong!")
     })
 }
-//  if(user){ 
-//         return <Navigate to={'/'}/>
-//    }
+
 
     return (
         <div className="container mx-auto min-h-screen flex justify-around">
@@ -104,7 +100,7 @@ const handleRegister = (e) => {
            </div>
 
            <div  className="flex justify-start items-center">
-            <div className=" text-white shadow-md rounded px-8 pt-6 pb-8 mb-4 border">
+            <div className=" text-white shadow-md rounded px-8 pt-6 pb-8 mb-4 border bg-gradient-to-br from-gray-900 to-gray-800">
   <div className="text-center mb-5">
       
   </div>
