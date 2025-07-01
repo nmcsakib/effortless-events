@@ -5,7 +5,7 @@ import { AuthContext } from "../context/AuthContext";
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
   if(loading) {
-    return <div className="min-h-screen flex justify-center items-center w-full">Loading...</div>
+    return <div className="min-h-screen flex justify-center items-center w-full"><span className="loading loading-infinity loading-xl"></span></div>
   }
   if (!user) {
     return <Navigate to="/authentication" replace />;

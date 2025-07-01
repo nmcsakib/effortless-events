@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { IoChevronForward } from "react-icons/io5";
-import StarfieldWarp from "./StarfieldWarp"
+import StarfieldWarp from "../components/StarFieldWrap/StarfieldWarp"
 import Navbar from '../components/Navbar/Navbar';
 import { Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
@@ -13,7 +13,7 @@ const Home = () => {
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
-    },[location])
+    },[location, setUser])
 
     return (
         <StarfieldWarp>

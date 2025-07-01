@@ -14,16 +14,20 @@ const AllEvents = () => {
   const [events, setEvents] = useState([]);
   const [showEvents, setShowEvents] = useState(events);
   const placeholders = ["Search With", "Event Title"];
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
+        setLoading(true)
         const res = await fetch(`${import.meta.env.VITE_SERVER}/all-events`);
         const data = await res.json();
         setEvents(data);
         
       } catch (err) {
         console.error("Failed to fetch events:", err);
+      } finally{
+        setLoading(false)
       }
     };
     
@@ -127,7 +131,7 @@ const AllEvents = () => {
       </div>
 
       <div className="pt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 justify-center items-center">
-        {showEvents.length > 0 ? (
+        { loading ? <p className="text-center col-span-3"><span className="loading loading-infinity loading-xl"></span></p> : showEvents.length > 0 ? (
           showEvents.map((event, i) => (
             <div key={event._id || i} className="flex justify-center items-center ">
               <EventCard event={event} />

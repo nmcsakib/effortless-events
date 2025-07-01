@@ -7,10 +7,12 @@ import MyEvents from "../pages/My-Events/My-Events";
 import UpdateEvent from "../components/Update-event/Update-event";
 import Authentication from "../pages/Authentication/Authentication";
 import PrivateRoute from "./PrivateRoute";
+import ErrorPage from "../pages/Error-Page/Error-Page";
 
 export const router = createBrowserRouter([
   {
     path: '/',
+    errorElement: <ErrorPage/>,
     element: <App />,
     children: [
       {

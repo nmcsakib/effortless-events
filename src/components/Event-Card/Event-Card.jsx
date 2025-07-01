@@ -27,6 +27,7 @@ const EventCard = ({ event, handleDelete }) => {
 // console.log(date);
  const handleJoin = async () => {
     try {
+     toast.loading("Request sending...")
       const res = await fetch(`${import.meta.env.VITE_SERVER}/join-event/${_id}`, {
         method: "PATCH",
       });

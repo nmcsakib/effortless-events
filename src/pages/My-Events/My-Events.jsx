@@ -11,6 +11,7 @@ const MyEvents = () => {
   const { user } = useContext(AuthContext); 
   const [myEvents, setMyEvents] = useState([]);
   const[deleted, setDeleted] = useState(0)
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
   useEffect(() => {
     if (!user) {
@@ -20,6 +21,7 @@ const MyEvents = () => {
 
     const fetchMyEvents = async () => {
       try {
+        setLoading(true)
         const res = await fetch(
           `${import.meta.env.VITE_SERVER}/my-events/${user.email}`
         );
@@ -27,6 +29,8 @@ const MyEvents = () => {
         setMyEvents(data);
       } catch (err) {
         console.error("Error fetching my events:", err);
+      }finally{
+        setLoading(false)
       }
     };
 
@@ -65,7 +69,7 @@ const MyEvents = () => {
       <SectionTitle title={"My"} bgTitle={"Events"} />
 
       <div className="pt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 justify-center ">
-        {myEvents.length > 0 ? (
+        {loading ? <p className="text-center col-span-3"><span className="loading loading-infinity loading-xl"></span></p> : myEvents.length > 0 ? (
           myEvents.map((event) => (
               <EventCard event={event} key={event._id} handleDelete={handleDelete}/>
             
