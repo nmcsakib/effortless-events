@@ -1,10 +1,10 @@
-# 🎉 Event Management Web Application (MERN Stack)
+# 🎉 Event Management Web Application | Efforless Events
 
 A full-featured Event Management Platform built using the MERN Stack (MongoDB, Express.js, React.js, Node.js). This application allows users to add, browse, and manage events, featuring custom authentication, search/filter functionality, and a user-friendly interface.
 
 ## 🌐 Live Demo
 
-🔗 **Live Site:** [https://effortless-events.vercel.app](https://effortless-events.vercel.app)  
+🔗 **Live Site:** [https://efforless-events.vercel.app](https://efforless-events.vercel.app)  
 🔗 **Server API:** [https://efforless-events-server.vercel.app](https://efforless-events-server.vercel.app)
 
 ---

@@ -23,7 +23,9 @@ const Navbar = () => {
             className="flex items-center justify-between w-full relative  px-[10px] py-[8px] container mx-auto">
 
             {/* logo */}
-            <img src="/logo.png" alt="logo" className="w-[55px] invert"/>
+            <Link to={'/'}>
+             <img src="/logo.png" alt="logo" className="w-[55px] invert"/>
+            </Link>
 
             {/* nav links */}
             <ul className="items-center gap-20 text-[1rem] text-[#fff] md:flex hidden">
@@ -43,7 +45,7 @@ const Navbar = () => {
             user ?  <div className="flex items-center gap-[15px]">
                 <div className="flex items-center gap-[10px] relative"
                      onClick={() => setAccountMenuOpen(!accountMenuOpen)}>
-                    <div className="relative">
+                    <div className="relative z-20">
                         <img
                             src={user?.photoURL}
                             alt="avatar" className="cursor-pointer w-[35px] h-[35px] rounded-full object-cover"/>
@@ -51,7 +53,7 @@ const Navbar = () => {
                     </div>
 
                     <div
-                        className={`${accountMenuOpen ? "translate-y-0 opacity-100 z-[1]" : "translate-y-[10px] opacity-0 z-[-1]"} bg-white w-max rounded-md absolute dark:bg-slate-800 top-[45px] right-0 p-[10px] flex flex-col transition-all duration-300 gap-[5px]`}>
+                        className={`${accountMenuOpen ? "translate-y-0 opacity-100 z-[20]" : "translate-y-[10px] opacity-0 z-[-1]"} bg-white w-max rounded-md absolute dark:bg-slate-800 top-[45px] right-0 p-[10px] flex flex-col transition-all duration-300 gap-[5px]`}>
                         <p className="flex items-center gap-[5px] rounded-md p-[8px] pr-[45px] py-[3px] text-[1rem]  text-gray-400">
                             <FiUser/>
                             {user?.name}
@@ -79,6 +81,8 @@ const Navbar = () => {
                     className="py-[7px] text-[1rem] px-[16px] rounded-full capitalize bg-[#687FE5] text-white hover:bg-blue-400 transition-all duration-300 sm:flex hidden">Sign
                     In
                 </Link>
+                <CiMenuFries onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+                             className="text-[1.8rem]  text-[#424242]c cursor-pointer md:hidden flex"/>
             </>
            
            }
@@ -87,9 +91,9 @@ const Navbar = () => {
 
             {/* mobile sidebar */}
             <aside
-                className={` ${mobileSidebarOpen ? "translate-x-0 opacity-100 z-20" : "translate-x-[200px] opacity-0 z-[-1]"} md:hidden p-4 text-center absolute top-[65px] bg-slate-400 right-0 w-full sm:w-[50%] rounded-md transition-all duration-300`}>
+                className={` ${mobileSidebarOpen ? "translate-x-0 opacity-100 z-20" : "md:translate-x-[200px] opacity-0 z-[-1]"} md:hidden p-4 text-center absolute top-[65px] bg-slate-400 right-0 w-full sm:w-[50%] rounded-md transition-all duration-300`}>
                
-                <ul className="items-center gap-[20px] text-[1rem] text-gray-600 flex flex-col">
+                <ul className=" items-center gap-[20px] text-[1rem] text-gray-600 flex flex-col">
 
                 <SmallNavMenu title="Home" link=""/>
                 <SmallNavMenu title="Events" link="Events"/>

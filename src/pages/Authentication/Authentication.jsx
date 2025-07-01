@@ -97,7 +97,7 @@ const handleRegister = (e) => {
 
     return (
         <div className="container mx-auto min-h-screen flex justify-around">
-           <div className="flex justify-center items-center">
+           <div className="hidden md:flex justify-center items-center">
         <img className=" animate-pulse" src="https://png.pngtree.com/png-vector/20220427/ourmid/pngtree-vector-login-icon-login-design-shadow-vector-png-image_13266424.png" alt="login photo" />
            </div>
 
