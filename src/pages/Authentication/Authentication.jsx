@@ -17,7 +17,7 @@ const Authentication = () => {
 
 const handleLogin = (e) => {
   e.preventDefault();
-
+  toast.loading("Processing...")
   const form = e.target;
   const formData = new FormData(form);
   const email = formData.get("email")
@@ -28,6 +28,7 @@ const handleLogin = (e) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
   }).then(res => res.json()).then(data => {
+    toast.dismiss()
       if(data.error){
       setError(data.error)
       console.log(error);
@@ -48,7 +49,7 @@ const handleLogin = (e) => {
 
 const handleRegister = (e) => {
   e.preventDefault();
-
+  toast.loading("Processing...")
   const form = e.target;
   const formData = new FormData(form);
   const email = formData.get("email")
@@ -63,6 +64,7 @@ const handleRegister = (e) => {
      headers: { 'content-type': 'application/json' },
       body: JSON.stringify(user)
   }).then(res => res.json()).then(data => {
+    toast.dismiss()
     setError('')
     // console.log(data);
     if(data.error){

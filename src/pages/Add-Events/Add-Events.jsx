@@ -45,6 +45,7 @@ const AddEvent = () => {
     };
 
     try {
+      toast.loading("Adding an Event")
       const res = await fetch(`${import.meta.env.VITE_SERVER}/add-event`, {
         method: "POST",
         headers: {
@@ -56,6 +57,7 @@ const AddEvent = () => {
       const result = await res.json();
 
       if (res.ok) {
+        toast.dismiss();
         toast.success("Event added successfully!");
         navigate("/Events"); 
       } else {

@@ -36,6 +36,7 @@ const EventCard = ({ event, handleDelete }) => {
       if (data.success) {
         setCount(prev => prev + 1); 
         setJoined(true)
+        toast.dismiss();
         toast.success('Thank you for Joining')
       } else {
         toast.error("Failed to join event");

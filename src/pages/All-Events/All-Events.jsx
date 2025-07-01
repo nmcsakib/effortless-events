@@ -114,7 +114,7 @@ const AllEvents = () => {
       <SectionTitle
         title={"All"}
         bgTitle={"Events"}
-        details="Browse through event details, connect with organizers, and secure your spot today. New experiences are just a click away!"
+        details="Browse through event Title, connect with organizers, and secure your spot today. New experiences are just a click away!"
       />
 
       <div className="flex flex-col md:flex-row justify-center items-center gap-5">

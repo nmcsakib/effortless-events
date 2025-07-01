@@ -33,6 +33,7 @@ const UpdateEvent = () => {
   };
 
   try {
+    toast.loading("Updating...")
     const res = await fetch(`${import.meta.env.VITE_SERVER}/event/${params.id}`, {
       method: "PATCH",
       headers: {
@@ -42,7 +43,14 @@ const UpdateEvent = () => {
     });
 
     const result = await res.json();
-    toast.success("Event Updated successfully")
+    if(result.success){
+      toast.dismiss()
+      toast.success("Event Updated successfully")
+    } else{
+      toast.dismiss()
+      toast.error("No changes made or event not found.")
+
+    }
     navigate('/My-Events')
   } catch (err) {
     console.error("Failed to update event:", err);
